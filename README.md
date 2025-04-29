@@ -25,7 +25,7 @@ A comprehensive NestJS backend API for real estate management with multi-role au
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/K-Honsu/estate-assessment.git
+   git clone https://github.com/K-Honsu/estate-api.git
    cd real-estate-platform-api
    ```
 
