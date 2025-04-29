@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Company } from 'src/business/entities/company.entity';
+import { Investment } from 'src/business/entities/investment.entity';
 
 export enum AccountType {
     ADMIN = 'admin',
@@ -43,6 +44,9 @@ export class User {
 
     @Column({ nullable: true })
     lastName?: string;
+
+    @OneToMany(() => Investment, investment => investment.investor)
+    investments: Investment[];
 
     @CreateDateColumn()
     createdAt: Date;

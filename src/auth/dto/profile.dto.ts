@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { AccountType } from '../entities/user.entity';
 
 export class ProfileDto {
@@ -19,6 +19,9 @@ export class ProfileDto {
 
     @Expose()
     firstName: string;
+
+    @Exclude()
+    password: string
 
     @Expose()
     lastName: string;

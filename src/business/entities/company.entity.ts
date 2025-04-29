@@ -5,9 +5,11 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     OneToOne,
-    JoinColumn
+    JoinColumn,
+    OneToMany
 } from 'typeorm';
 import { User } from 'src/auth/entities/user.entity';
+import { Project } from './project.entity';
 
 @Entity()
 export class Company {
@@ -26,6 +28,9 @@ export class Company {
     @OneToOne(() => User, user => user.company)
     @JoinColumn()
     user?: User;
+
+    @OneToMany(() => Project, project => project.company)
+    projects: Project[];
 
     @CreateDateColumn()
     createdAt: Date;

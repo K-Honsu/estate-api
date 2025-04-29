@@ -7,7 +7,7 @@ import { User } from './entities/user.entity';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 
-@Controller('api/v1/auth')
+@Controller('v1/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 

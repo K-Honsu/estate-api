@@ -7,18 +7,18 @@ import { SignInDto } from './dto/signin.dto';
 import { JwtPayload } from './interfaces/auth.interface';
 import { JwtService } from '@nestjs/jwt';
 import { InvestorDto } from './dto/investor.dto';
-import { Company } from 'src/business/entities/company.entity';
 import { RegisterBusinessDto } from './dto/business.dto';
 import { plainToInstance } from 'class-transformer';
 import { RegisterBusinessResponseDto, CompanyResponseDto, UserResponseDto } from './interfaces/business.interface';
 import { ProfileDto } from './dto/profile.dto';
+import { BusinessService } from 'src/business/business.service';
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectRepository(User) private readonly userModel: Repository<User>,
-        @InjectRepository(Company) private readonly companyModel: Repository<Company>,
         private readonly jwtService: JwtService,
+        readonly businessService: BusinessService,
     ) {
 
     }
@@ -34,7 +34,7 @@ export class AuthService {
         if (existingUser) {
             throw new ConflictException('Email already in use');
         }
-        const existingCompany = await this.companyModel.findOne({
+        const existingCompany = await this.businessService.companyModel.findOne({
             where: { companyRegNumber: dto.companyRegNumber },
         });
         if (existingCompany) {
@@ -49,7 +49,7 @@ export class AuthService {
             accountType: dto.accountType
         });
 
-        const company = this.companyModel.create({
+        const company = this.businessService.companyModel.create({
             companyName: dto.companyName,
             companyRegNumber: dto.companyRegNumber,
             companyAddress: dto.companyAddress
@@ -59,7 +59,7 @@ export class AuthService {
         user.company = company;
 
         await this.userModel.save(user);
-        await this.companyModel.save(company);
+        await this.businessService.companyModel.save(company);
 
         return {
             message: "Business created successfully",
