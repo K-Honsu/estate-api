@@ -6,6 +6,5 @@ export class CreateProjectDto {
     name: string;
 
     @IsString()
-    @IsOptional()
-    description?: string;
+    description: string;
 }

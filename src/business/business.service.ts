@@ -38,21 +38,25 @@ export class BusinessService {
         return this.projectModel.save(project);
     }
 
-    async getProjects(user: User): Promise<Project[]> {
-        return this.projectModel.find({
+    async getProjects(user: User): Promise<{ message: string, data: Project[] }> {
+        const data = await this.projectModel.find({
             where: { company: { user: { id: user.id } } },
             relations: ['company']
         });
+
+        return { message: "Project(s) gotten successfully", data }
     }
 
-    async getInvestments(user: User): Promise<InvestmentResponseDto[]> {
+    async getInvestments(user: User): Promise<{ message: string, data: InvestmentResponseDto[] }> {
         const investments = await this.investmentModel.find({
             where: { investor: { id: user.id } },
             relations: ['project']
         });
 
-        return plainToInstance(InvestmentResponseDto, investments, {
-            excludeExtraneousValues: true,
-        });
+        return {
+            message: "Investments gotten successfully", data: plainToInstance(InvestmentResponseDto, investments, {
+                excludeExtraneousValues: true,
+            })
+        }
     }
 }

@@ -5,7 +5,8 @@ import { Investment } from './investment.entity';
 export enum ProjectStatus {
     DRAFT = "draft",
     ACTIVE = "active",
-    COMPLETED = "completed"
+    COMPLETED = "completed",
+    IN_PROGRESS = "in_progress"
 }
 
 @Entity()
@@ -19,7 +20,7 @@ export class Project {
     @Column()
     description: string;
 
-    @Column({ type: "enum", enum: ProjectStatus })
+    @Column({ type: "enum", enum: ProjectStatus, default: ProjectStatus.IN_PROGRESS })
     status: ProjectStatus;
 
     @ManyToOne(() => Company, company => company.projects)

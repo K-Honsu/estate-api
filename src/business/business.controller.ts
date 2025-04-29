@@ -8,11 +8,11 @@ import { BusinessGuard } from './guards/business.guards';
 import { InvestorGuard } from 'src/auth/guards/investor.guard';
 
 @Controller('v1')
-@UseGuards(JwtAuthGuard, BusinessGuard)
 export class BusinessController {
   constructor(private readonly businessService: BusinessService) { }
 
   @Post('business/projects')
+  @UseGuards(JwtAuthGuard, BusinessGuard)
   async createProject(
     @Req() req: Request,
     @Body() createDto: CreateProjectDto
@@ -21,6 +21,7 @@ export class BusinessController {
   }
 
   @Get('business/projects')
+  @UseGuards(JwtAuthGuard, BusinessGuard)
   async getProjects(@Req() req: Request) {
     return this.businessService.getProjects(req.user as User);
   }

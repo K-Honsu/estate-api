@@ -16,7 +16,7 @@ import { BusinessService } from 'src/business/business.service';
 @Injectable()
 export class AuthService {
     constructor(
-        @InjectRepository(User) private readonly userModel: Repository<User>,
+        @InjectRepository(User) readonly userModel: Repository<User>,
         private readonly jwtService: JwtService,
         readonly businessService: BusinessService,
     ) {
@@ -108,7 +108,7 @@ export class AuthService {
     async login(dto: SignInDto) {
         const { email, password } = dto
         const user = await this.validateUser(email, password);
-        const payload: JwtPayload = { email: user.data.email, sub: user.data.id };
+        const payload: JwtPayload = { email: user.data.email, sub: user.data.id, accountType: user.data.accountType };
         const token = this.jwtService.sign(payload)
 
         return {
