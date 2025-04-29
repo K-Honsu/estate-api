@@ -12,8 +12,6 @@ import {
 import { NodeEnv } from 'src/common/enums/node-env.enum';
 
 export class EnvironmentVariables {
-    @Max(65535)
-    @Min(0)
     @IsNumber()
     PORT: number;
 

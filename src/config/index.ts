@@ -6,7 +6,7 @@ import { EnvironmentVariables } from './environment-variables';
 import { plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
 
-export const APP_NAME = 'amac';
+export const APP_NAME = 'estate-api';
 export const TMP_DIR = path.join(os.tmpdir(), APP_NAME);
 
 if (!fs.existsSync(TMP_DIR)) fs.mkdirSync(TMP_DIR);
@@ -25,6 +25,8 @@ export interface Config {
 
 export function configuration() {
 
+    const apiUrl = 'https://api.template.com';
+    const websiteUrl = 'https://template.com';
     const randomPort = crypto.randomInt(49_152, 65_535);
 
     const nodeEnv = env.NODE_ENV ?? 'development';
@@ -40,8 +42,8 @@ export function configuration() {
         },
         jwt: {
             secret: env.JWT_SECRET || 'insecure',
-            issuer: env.JWT_ISSUER,
-            audience: env.JWT_AUDIENCE,
+            issuer: env.JWT_ISSUER || apiUrl,
+            audience: env.JWT_AUDIENCE || websiteUrl,
             expiresIn: env.JWT_EXPIRES_IN || '1hr',
         },
         db: {
