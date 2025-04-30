@@ -1,7 +1,12 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+  MinLength,
+} from 'class-validator';
 import { AccountType } from '../entities/user.entity';
 import { Expose } from 'class-transformer';
-
 
 export class InvestorDto {
   @IsEmail()
@@ -15,7 +20,7 @@ export class InvestorDto {
 
   @IsEnum(AccountType)
   @IsNotEmpty()
-  accountType: AccountType
+  accountType: AccountType;
 
   @IsString()
   state: string;
@@ -24,12 +29,11 @@ export class InvestorDto {
   firstName: string;
 
   @IsString()
-  phone: string
+  phone: string;
 
   @IsString()
   lastName: string;
 }
-
 
 export class InvestmentResponseDto {
   @Expose()

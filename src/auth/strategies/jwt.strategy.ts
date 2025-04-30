@@ -7,21 +7,25 @@ import { AuthService } from '../auth.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-    constructor(
-        private authService: AuthService,
-        configService: ConfigService,
-    ) {
-        super({
-            jwtFromRequest: ExtractJwt.fromExtractors([
-                ExtractJwt.fromAuthHeaderAsBearerToken(),
-                (req) => req?.cookies?.access_token,
-            ]),
-            ignoreExpiration: false,
-            secretOrKey: configService.get("jwt.secret"),
-        });
-    }
+  constructor(
+    private authService: AuthService,
+    configService: ConfigService,
+  ) {
+    super({
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+        (req) => req?.cookies?.access_token,
+      ]),
+      ignoreExpiration: false,
+      secretOrKey: configService.get('jwt.secret'),
+    });
+  }
 
-    async validate(payload: JwtPayload) {
-        return { userId: payload.sub, email: payload.email, accountType : payload.accountType };
-    }
+  async validate(payload: JwtPayload) {
+    return {
+      userId: payload.sub,
+      email: payload.email,
+      accountType: payload.accountType,
+    };
+  }
 }

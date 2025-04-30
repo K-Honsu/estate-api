@@ -1,4 +1,12 @@
-import { Body, ClassSerializerInterceptor, Controller, Get, Post, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterBusinessDto } from './dto/business.dto';
 import { InvestorDto } from './dto/investor.dto';
@@ -9,9 +17,9 @@ import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('v1/auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
-  @Get("profile")
+  @Get('profile')
   @UseGuards(JwtAuthGuard)
   async getProfile(@CurrentUser() user: User) {
     return this.authService.getProfile(user.id);
@@ -22,14 +30,14 @@ export class AuthController {
     return this.authService.login(dto);
   }
 
-  @Post("business")
+  @Post('business')
   async business(@Body() dto: RegisterBusinessDto) {
-    return await this.authService.registerBusiness(dto)
+    return await this.authService.registerBusiness(dto);
   }
 
-  @Post("investor")
+  @Post('investor')
   @UseInterceptors(ClassSerializerInterceptor)
   async investor(@Body() dto: InvestorDto) {
-    return await this.authService.registerInvestor(dto)
+    return await this.authService.registerInvestor(dto);
   }
 }

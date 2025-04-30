@@ -1,37 +1,49 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { Company } from './company.entity';
 import { Investment } from './investment.entity';
 
 export enum ProjectStatus {
-    DRAFT = "draft",
-    ACTIVE = "active",
-    COMPLETED = "completed",
-    IN_PROGRESS = "in_progress"
+  DRAFT = 'draft',
+  ACTIVE = 'active',
+  COMPLETED = 'completed',
+  IN_PROGRESS = 'in_progress',
 }
 
 @Entity()
 export class Project {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    description: string;
+  @Column()
+  description: string;
 
-    @Column({ type: "enum", enum: ProjectStatus, default: ProjectStatus.IN_PROGRESS })
-    status: ProjectStatus;
+  @Column({
+    type: 'enum',
+    enum: ProjectStatus,
+    default: ProjectStatus.IN_PROGRESS,
+  })
+  status: ProjectStatus;
 
-    @ManyToOne(() => Company, company => company.projects)
-    company: Company;
+  @ManyToOne(() => Company, (company) => company.projects)
+  company: Company;
 
-    @OneToMany(() => Investment, investment => investment.project)
-    investments: Investment[];
+  @OneToMany(() => Investment, (investment) => investment.project)
+  investments: Investment[];
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @UpdateDateColumn()
-    updatedAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

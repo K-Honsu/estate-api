@@ -10,7 +10,7 @@ export class InvestorResponseDto {
   accountType: string;
   createdAt: Date;
   updatedAt: Date;
-  
+
   @Exclude()
   password: string;
 }

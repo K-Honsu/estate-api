@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from "@nestjs/config"
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Config, configuration, validateEnv } from './config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
@@ -12,7 +12,6 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
-
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
@@ -20,26 +19,25 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
       load: [configuration],
       validate: validateEnv,
       isGlobal: true,
-      cache: true
+      cache: true,
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService<Config, true>) => {
-        const config = configService.get("db", { infer: true })
+        const config = configService.get('db', { infer: true });
         return {
           synchronize: true,
           logging: true,
-          type: "mysql",
+          type: 'mysql',
           host: config.host,
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
           autoLoadEntities: true,
           port: config.port,
           password: config.password,
           database: config.name,
-          username: config.username
-
-        }
-      }
+          username: config.username,
+        };
+      },
     }),
     JwtModule.registerAsync({
       inject: [ConfigService],
@@ -65,10 +63,10 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
     }),
     AuthModule,
     BusinessModule,
-    AdminModule
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService, JwtAuthGuard, JwtStrategy],
-  exports: [JwtAuthGuard, JwtStrategy]
+  exports: [JwtAuthGuard, JwtStrategy],
 })
-export class AppModule { }
+export class AppModule {}

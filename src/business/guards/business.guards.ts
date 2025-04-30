@@ -1,4 +1,9 @@
-import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AccountType } from '../../auth/entities/user.entity';
 
@@ -11,8 +16,10 @@ export class BusinessGuard implements CanActivate {
     const user = request.user;
 
     if (user?.accountType !== AccountType.BUSINESS) {
-      console.log({user})
-      throw new ForbiddenException('Only business accounts can access this resource');
+      console.log({ user });
+      throw new ForbiddenException(
+        'Only business accounts can access this resource',
+      );
     }
 
     return true;

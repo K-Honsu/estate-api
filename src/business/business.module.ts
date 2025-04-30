@@ -7,11 +7,9 @@ import { Project } from './entities/project.entity';
 import { Investment } from './entities/investment.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Company, Project, Investment]),
-  ],
+  imports: [TypeOrmModule.forFeature([Company, Project, Investment])],
   controllers: [BusinessController],
   providers: [BusinessService],
-  exports : [BusinessService]
+  exports: [BusinessService],
 })
-export class BusinessModule { }
+export class BusinessModule {}

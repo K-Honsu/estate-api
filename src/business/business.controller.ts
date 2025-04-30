@@ -9,13 +9,13 @@ import { InvestorGuard } from 'src/auth/guards/investor.guard';
 
 @Controller('v1')
 export class BusinessController {
-  constructor(private readonly businessService: BusinessService) { }
+  constructor(private readonly businessService: BusinessService) {}
 
   @Post('business/projects')
   @UseGuards(JwtAuthGuard, BusinessGuard)
   async createProject(
     @Req() req: Request,
-    @Body() createDto: CreateProjectDto
+    @Body() createDto: CreateProjectDto,
   ) {
     return this.businessService.createProject(req.user as User, createDto);
   }

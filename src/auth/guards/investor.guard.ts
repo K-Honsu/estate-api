@@ -1,4 +1,9 @@
-import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AccountType } from '../../auth/entities/user.entity';
 
@@ -11,7 +16,9 @@ export class InvestorGuard implements CanActivate {
     const user = request.user;
 
     if (user?.accountType !== AccountType.INVESTOR) {
-      throw new ForbiddenException('Only investor accounts can access this resource');
+      throw new ForbiddenException(
+        'Only investor accounts can access this resource',
+      );
     }
 
     return true;

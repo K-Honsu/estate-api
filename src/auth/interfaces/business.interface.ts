@@ -10,10 +10,10 @@ export class UserResponseDto {
   accountType: string;
   createdAt: Date;
   updatedAt: Date;
-  
+
   @Exclude()
   password: string;
-  
+
   @Exclude()
   company: any;
 }
@@ -25,7 +25,7 @@ export class CompanyResponseDto {
   companyAddress: string;
   createdAt: Date;
   updatedAt: Date;
-  
+
   @Exclude()
   user: any;
 }
